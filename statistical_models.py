@@ -1,18 +1,12 @@
 import argparse
 import pandas as pd
 import darts
-import torch
 import numpy as np
-import matplotlib
 from darts.metrics import mape
 from darts.metrics import mase
 from darts.dataprocessing.transformers import Scaler
 from darts import TimeSeries
-from darts.utils.timeseries_generation import datetime_attribute_timeseries
-from darts.models import RNNModel,Prophet
-from darts.models import RegressionModel
-from darts.models import VARIMA,ARIMA,LightGBMModel
-from darts.models import ExponentialSmoothing,KalmanForecaster,LinearRegressionModel,BlockRNNModel, NBEATSModel, NHiTSModel,TCNModel,TransformerModel,TFTModel
+from darts.models import ARIMA,KalmanForecaster,LinearRegressionModel
 import matplotlib.pyplot as plt
 from darts.utils.likelihood_models import QuantileRegression
 from metrics import mape
