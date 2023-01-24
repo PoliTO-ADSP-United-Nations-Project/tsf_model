@@ -75,7 +75,7 @@ if __name__ == '__main__':
     parser.add_argument('--split_date', type=str, default="20211201",
                         help='date to split. Format "yyyymmdd".')
     # plot selection 
-    parser.add_argument('--plot_prediction', type=str, default=True,
+    parser.add_argument('--plot_prediction', type=bool, default=True,
                         help='Plot Predictions or not')
     
 
