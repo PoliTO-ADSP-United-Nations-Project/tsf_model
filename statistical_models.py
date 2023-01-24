@@ -74,7 +74,11 @@ if __name__ == '__main__':
     # data selection for train-test
     parser.add_argument('--split_date', type=str, default="20211201",
                         help='date to split. Format "yyyymmdd".')
+    # plot selection 
+    parser.add_argument('--plot_prediction', type=str, default=True,
+                        help='Plot Predictions or not')
+    
 
     args = parser.parse_args()
     Dataset=pd.read_csv(args.dataset_dir)
-    statistical_historical(args.model_name,args.load_model,date_test=args.split_date,Dataset=Dataset)
+    statistical_historical(args.model_name,args.load_model,date_test=args.split_date,Dataset=Dataset,plot=args.plot_prediction)
