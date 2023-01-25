@@ -22,15 +22,8 @@ def statistical_historical(model_name,load,date_test,Dataset,model_path="Content
         else:
             model=KalmanForecaster(dim_x=18)
     else:
-        ValueError("Model not supported.Statistical supported models are ARIMA and KalmanForecaster")
-    target_TimeSeries = TimeSeries.from_series(Dataset["Sum_Inflow"])
-    covariates_TimeSeries = TimeSeries.from_dataframe(Dataset.drop(["Sum_Inflow"], axis=1))
-    scaler_3 = Scaler()
-    scaler_4 = Scaler()
-    tot_cov = scaler_3.fit_transform(covariates_TimeSeries)
-    scaled_full = scaler_4.fit_transform(target_TimeSeries)
-    Target = target_TimeSeries.pd_dataframe()
-    filtered_Target = Target.loc["2021-12-01" : "2022-09-01"]
+        raise ValueError("Model not supported.Statistical supported models are ARIMA and KalmanForecaster")
+    scaler_3,scaler_4,target_TimeSeries,covariates_TimeSeries,tot_cov,scaled_full,Target,filtered_Target=preprocess(model_name,Dataset)
     if model_name in ["ARIMA","KalmanForecaster"]:
         historical_forecast = model.historical_forecasts(scaled_full,past_covariates=tot_cov, num_samples=200 , start=pd.Timestamp(date_test), forecast_horizon=1,stride=1 ,verbose=True)
         ts_pred = scaler_4.inverse_transform(historical_forecast)
@@ -74,11 +67,7 @@ if __name__ == '__main__':
     # data selection for train-test
     parser.add_argument('--split_date', type=str, default="20211201",
                         help='date to split. Format "yyyymmdd".')
-    # plot selection 
-    parser.add_argument('--plot_prediction', type=bool, default=True,
-                        help='Plot Predictions or not')
-    
 
     args = parser.parse_args()
     Dataset=pd.read_csv(args.dataset_dir)
-    statistical_historical(args.model_name,args.load_model,date_test=args.split_date,Dataset=Dataset,plot=args.plot_prediction)
+    statistical_historical(args.model_name,args.load_model,date_test=args.split_date,Dataset=Dataset)
