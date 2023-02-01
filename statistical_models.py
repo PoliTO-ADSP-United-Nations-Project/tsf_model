@@ -6,7 +6,7 @@ from darts.metrics import mape
 from darts.metrics import mase
 from darts.dataprocessing.transformers import Scaler
 from darts import TimeSeries
-from darts.models import ARIMA,KalmanForecaster,LinearRegressionModel
+from darts.models import ARIMA,KalmanForecaster
 import matplotlib.pyplot as plt
 from darts.utils.likelihood_models import QuantileRegression
 from metrics import mape
