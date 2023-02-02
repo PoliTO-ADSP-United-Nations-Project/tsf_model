@@ -12,7 +12,7 @@ from darts.utils.likelihood_models import QuantileRegression
 from metrics import mape
 from preprocess import preprocess
 
-def statistical_historical(model_name,load,date_test,Dataset,model_path="Content/model",plot=True):
+def statistical_historical(model_name,load,date_test,Dataset,model_path="Content/model",plot=True,destination_country):
 
 
     if model_name=="ARIMA":
@@ -24,7 +24,7 @@ def statistical_historical(model_name,load,date_test,Dataset,model_path="Content
             model=KalmanForecaster(dim_x=18)
     else:
         raise ValueError("Model not supported.Statistical supported models are ARIMA and KalmanForecaster")
-    scaler_3,scaler_4,target_TimeSeries,covariates_TimeSeries,tot_cov,scaled_full,Target,filtered_Target=preprocess(model_name,Dataset)
+    scaler_3,scaler_4,target_TimeSeries,covariates_TimeSeries,tot_cov,scaled_full,Target,filtered_Target=preprocess(model_name,Dataset,destination_country)
     if model_name in ["ARIMA","KalmanForecaster"]:
         historical_forecast = model.historical_forecasts(scaled_full,past_covariates=tot_cov, num_samples=200 , start=pd.Timestamp(date_test), forecast_horizon=1,stride=1 ,verbose=True)
         ts_pred = scaler_4.inverse_transform(historical_forecast)
@@ -68,6 +68,8 @@ if __name__ == '__main__':
     # data selection for train-test
     parser.add_argument('--split_date', type=str, default="20211201",
                         help='date to split. Format "yyyymmdd".')
+    parser.add_argument('--destination_country', type=str, default="ITA",
+                        help='Destination Country of the migrants.')
 
     args = parser.parse_args()
     Dataset=pd.read_csv(args.dataset_dir)
