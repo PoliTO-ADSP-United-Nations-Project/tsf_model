@@ -4,7 +4,8 @@ import torch
 import numpy as np
 from darts.dataprocessing.transformers import Scaler
 
-def preprocess(model_name,Dataset):
+def preprocess(model_name,Dataset,destination_country):
+    Dataset=Dataset[Dataset["Destination_country"]==country]
     if model_name in ["ARIMA","KalmanFilter"]:
         target_TimeSeries = TimeSeries.from_series(Dataset["Sum_Inflow"])
         covariates_TimeSeries = TimeSeries.from_dataframe(Dataset.drop(["Sum_Inflow"], axis=1))
