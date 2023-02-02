@@ -147,7 +147,7 @@ def tft_historical(point_to_predict,input_chunk,output_chunk,n_epochs,Dataset,ac
             max_epochs=n_epochs,
             accelerator="gpu",
             enable_model_summary=True,
-            gradient_clip_val=0.1,
+            gradient_clip_val=0.2,
             limit_train_batches=30,  # coment in for training, running valiation every 30 batches
             #fast_dev_run=False,  # comment in to check that networkor dataset has no serious bugs
             callbacks=[lr_logger, early_stop_callback],
