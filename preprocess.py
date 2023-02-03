@@ -6,10 +6,11 @@ from darts import TimeSeries
 from darts.dataprocessing.transformers import Scaler
 
 def preprocess(model_name,Dataset,destination_country):
-    Dataset=Dataset[Dataset["Destination_country"]==destination_country][["date","Sum_Inflow"]]
-    Dataset=Dataset[:69].set_index("date")
-    Dataset.index = pd.to_datetime(Dataset.index)
+    
     if model_name in ["ARIMA","KalmanForecaster"]:
+        Dataset=Dataset[Dataset["Destination_country"]==destination_country][["date","Sum_Inflow"]]
+        Dataset=Dataset[:69].set_index("date")
+        Dataset.index = pd.to_datetime(Dataset.index)
         target_TimeSeries = TimeSeries.from_series(Dataset)
         covariates_TimeSeries = TimeSeries.from_dataframe(Dataset.drop(["Sum_Inflow"], axis=1))
         scaler_3 = Scaler()
