@@ -276,7 +276,7 @@ if __name__ == '__main__':
                         help='Actual value of greece miration')
 
     
-    parser.add_argument('--random_seed', default=None, type = int,
+    parser.add_argument('--random_seed', default=0, type = int,
                         help='Random Seed')
 
     parser.add_argument('--plot', default=False, type = bool,
