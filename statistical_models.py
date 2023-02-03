@@ -12,7 +12,7 @@ from darts.utils.likelihood_models import QuantileRegression
 from metrics import mape
 from preprocess import preprocess
 
-def statistical_historical(model_name,load,date_test,Dataset,model_path="Content/model",plot=True,destination_country):
+def statistical_historical(model_name,load,date_test,Dataset,destination_country,model_path="Content/model",plot=True):
 
 
     if model_name=="ARIMA":
@@ -26,7 +26,7 @@ def statistical_historical(model_name,load,date_test,Dataset,model_path="Content
         raise ValueError("Model not supported.Statistical supported models are ARIMA and KalmanForecaster")
     scaler_3,scaler_4,target_TimeSeries,covariates_TimeSeries,tot_cov,scaled_full,Target,filtered_Target=preprocess(model_name,Dataset,destination_country)
     if model_name in ["ARIMA","KalmanForecaster"]:
-        historical_forecast = model.historical_forecasts(scaled_full,past_covariates=tot_cov, num_samples=200 , start=pd.Timestamp(date_test), forecast_horizon=1,stride=1 ,verbose=True)
+        historical_forecast = model.historical_forecasts(scaled_full, num_samples=200 , start=pd.Timestamp(date_test), forecast_horizon=1,stride=1 ,verbose=True)
         ts_pred = scaler_4.inverse_transform(historical_forecast)
         DF_predicted = historical_forecast.quantile_timeseries()
         ts_pred_df = scaler_4.inverse_transform(DF_predicted)
@@ -48,18 +48,19 @@ def statistical_historical(model_name,load,date_test,Dataset,model_path="Content
         ax.grid(visible=True)
         ax.plot_date(filtered_Target.index,filtered_Target["Sum_Inflow"],linestyle='solid')
         ax.plot_date(filtered_Target.index,DF_prova_predicted["Sum_Inflow_0.5"],linestyle='solid')
-    return score
 
-
+    print(score)
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='run the models we trained on our dataset')
     
     parser.add_argument('--dataset_dir', action='store', default='dir', 
                         help='root of the dataset')
+    parser.add_argument('--destination_country', action='store', default='ITA',choices=("ESP","GRC","ITA") ,
+                        help='Destination country of the migrants(ITA, ESP or GRC)')
 
     # model selection
-    parser.add_argument('--model_name',choices=("TFT","KalmanForecaster","ARIMA","'LinearRegressionModel'"), type=str, default="ARIMA",
+    parser.add_argument('--model_name',choices=("TFT","KalmanForecaster","ARIMA"), type=str, default="ARIMA",
                         help='model name selection')
     parser.add_argument('--load_model',choices=(True,False), type=bool, default=False,
                         help='load a pre-trained KalmanFilter model or train from scratch')
@@ -68,9 +69,7 @@ if __name__ == '__main__':
     # data selection for train-test
     parser.add_argument('--split_date', type=str, default="20211201",
                         help='date to split. Format "yyyymmdd".')
-    parser.add_argument('--destination_country', type=str, default="ITA",
-                        help='Destination Country of the migrants.')
 
     args = parser.parse_args()
     Dataset=pd.read_csv(args.dataset_dir)
-    statistical_historical(args.model_name,args.load_model,date_test=args.split_date,Dataset=Dataset)
+    statistical_historical(args.model_name,args.load_model,date_test=args.split_date,Dataset=Dataset,destination_country=args.destination_country)
