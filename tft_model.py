@@ -24,7 +24,7 @@ from metrics import mae,mape
 
 
 def tft_historical(point_to_predict,input_chunk,output_chunk,n_epochs,Dataset,actual_ita,actual_esp,actual_grc,random_seed,model_path="Content/model",plot=True):
-    Dataset = preprocess("TFT", Dataset)
+    Dataset = preprocess("TFT", Dataset,"ITA")
     #Prepare the parameters for the TFT model
 
     spain_list = ['CIV', 'CMR', 'DZA', 'GIN', 'GMB', 'MAR', 'MLI', 'SEN', 'SYR']
@@ -272,7 +272,7 @@ if __name__ == '__main__':
     parser.add_argument('--actual_esp', default=[3842, 4255.0, 3117, 1388, 1473, 2351, 1540, 2647, 2289, 4190], type = list,
                         help='Actual value of spain miration')
 
-    parser.add_argument('--actual_esp', default=[577.0, 103.0, 49.0, 203.0, 288.0, 215.0, 341.0, 118.0, 698.0, 386.0], type = list,
+    parser.add_argument('--actual_grc', default=[577.0, 103.0, 49.0, 203.0, 288.0, 215.0, 341.0, 118.0, 698.0, 386.0], type = list,
                         help='Actual value of greece miration')
 
     
@@ -284,9 +284,18 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     Dataset=pd.read_csv(args.dataset_dir)
-    tft_historical(args.model_name,args.load_model,date_test=args.split_date,Dataset=Dataset)
+    tft_historical(args.point_to_predict,args.input_chunk,args.output_chunk,args.n_epochs,Dataset,args.actual_ita,args.actual_esp,args.actual_grc,args.random_seed,model_path="Content/model",plot=args.plot)
+    
 
     
+
+
+
+
+
+
+
+
 
 
 
