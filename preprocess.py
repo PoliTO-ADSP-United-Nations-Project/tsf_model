@@ -22,8 +22,9 @@ def preprocess(model_name,Dataset,destination_country):
         return scaler_3,scaler_4,target_TimeSeries,covariates_TimeSeries,tot_cov,scaled_full,Target,filtered_Target
     elif model_name== "TFT":
         Dataset_new=Dataset.copy()
-        del Dataset_new["Unnamed: 0"]
+        if "Unnamed: 0" in Dataset_new.columns:
+            Dataset_new.drop(["Unnamed: 0"],axis=1,inplace=True)
         Dataset_new["month"]=Dataset_new["month"].map(str)
-        return Dataset_new
+        return Dataset_new.fillna(0)
     else:
         raise ValueError("Not supported model name")
