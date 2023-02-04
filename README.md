@@ -8,9 +8,10 @@ In this repository is possible to find the code built for the purpose of this pr
 To use our model, install the requirements and clone the `dataset` and `model` repositories:
 
 ```python
-pip install -r requirements.txt
 ! git clone https://github.com/PoliTO-ADSP-United-Nations-Project/humanitarian_aid_dataset
 ! git clone https://github.com/PoliTO-ADSP-United-Nations-Project/tsf_model
+
+! pip install -r requirements.txt
 ```
 
 ## Create the dataset from scratch: 
