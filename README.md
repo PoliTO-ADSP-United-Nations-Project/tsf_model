@@ -5,30 +5,44 @@ In this repository is possible to find the code built for the purpose of this pr
 - [`TFT - Temporal Fusion Transformer`](https://github.com/PoliTO-ADSP-United-Nations-Project/tsf_model/blob/main/tft_model.py): attention-based Deep Neural Netwoek, optimized for multivariate time series forecasting.
 
 
-To use our model, install the requirements and clone the `dataset` and `model` repositories:
+To use our model, install the requirements and clone the `dataset` repositories:
 
-```python
-! git clone https://github.com/PoliTO-ADSP-United-Nations-Project/humanitarian_aid_dataset
-! git clone https://github.com/PoliTO-ADSP-United-Nations-Project/tsf_model
-
-! pip install -r requirements.txt
+```bash
+git clone https://github.com/PoliTO-ADSP-United-Nations-Project/humanitarian_aid_dataset
+```
+and `model` repositories:
+```bash
+git clone https://github.com/PoliTO-ADSP-United-Nations-Project/tsf_model
 ```
 
-## Create the dataset from scratch: 
+## Execute with Jupyter notebook:
+You can find a complete [`Jupyter notebook`](tft_model_jupyter.ipynb) file that shows how run both the models.<br/>
+There is the possibility to open it through Google Colab.
+
+## Execute in local:
+As an alternative, you can use the operating system terminal to execute the code in this way:
+
+### Create the dataset from scratch: 
 ```python
-%run --"/content/humanitarian_aid_dataset/main.py" 
+pip install -r "./humanitarian_aid_dataset/requirements.txt"
+python ./humanitarian_aid_dataset/main.py
 ```
+
 or download it from [`Figshare`](https://figshare.com/articles/dataset/VAL2G_-_Dataset/22006961).
 
-## Run **ARIMA** Model:
+### Get mandatory packages:
 ```python
-%run "/content/tsf_model/statistical_models.py" --dataset_dir="/content/final_dataset.csv" --destination_country="ITA" --model_name="ARIMA"
+pip install -r "./tsf_model/requirements.txt"
 ```
 
-## Run **TFT** Model:
-
+### Run **ARIMA** Model:
 ```python
-%run "/content/tsf_model/tft_model.py" --dataset_dir="/content/Final_TFT.csv"
+python ./tsf_model/statistical_models.py --dataset_dir="/content/final_dataset.csv" --destination_country="ITA" --model_name="ARIMA"
+```
+
+### Run **TFT** Model:
+```python
+python ./tsf_model/tft_model.py --dataset_dir="/content/Final_TFT.csv"
 ```
 ---
 
