@@ -46,12 +46,15 @@ python ./tsf_model/tft_model.py --dataset_dir="/content/Final_TFT.csv"
 ```
 ---
 
-Please, refere to the official paper for further information.
+Please, refere to the official [`paper`](https://github.com/PoliTO-ADSP-United-Nations-Project/.github/blob/main/ADSP_paper.pdf) for further information.
+
+## References
+If you find this work useful, pleace cite the paper above as:
+
 ```bibtex
-@article{
-  title={Time Series Forecasting for Humanitarian Aid},
-  author={Bergadano L., Frigiola A., Mantegna G., Scriotino G., Zingarelli V.},
-  pages={N/A},
+@article{TSF_4_ha,
+  title={Time series forecasting for humanitarian aid},
+  author={Bergadano Lorenzo, Frigiola Arcangelo, Mantegna Giovanni, Scriotino Giovanni, Zingarelli Valerio},
   year={2023}
 }
 ```
